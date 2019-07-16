@@ -1,0 +1,32 @@
+---
+  - name: Download & Install Sql Server Express 2014
+    win_chocolatey:
+      name: mssqlserver2014express
+      state: present
+
+  - name: Download & Install Sql Server Management Studio 2014
+    win_chocolatey:
+      name: mssqlservermanagementstudio2014express
+      state: present
+
+      
+  - name: Debug Node Host Name
+    debug:
+      msg : '{{ ansible_hostname }}'
+
+  - name: Debug Create DB Scipt Path
+    debug:
+      msg : '{{ pw_script }}/db_script.ps1'
+
+
+  - name: Drop_Create ChatDB
+    win_shell: '{{ pw_script }}/db_script.ps1' 
+
+  - name: Create User with Login
+    win_shell: '{{ pw_script }}/createuser.ps1' 
+
+  - name: Create DB Tables and seed data
+    win_shell: "{{ pw_script }}/createtables_script.ps1" 
+
+  - name: Create DB Stored Procedures
+    win_shell: "{{ pw_script }}/createStoredProcedures.ps1" 

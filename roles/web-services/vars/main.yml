@@ -1,0 +1,6 @@
+---
+
+web_services_dest_path: 'C:\inetpub\wwwroot\SignalRWeb'
+git_repos_dest_path: 'C:\GitRepo.CompiledCode\ChatServerArtifacts\publish'
+
+

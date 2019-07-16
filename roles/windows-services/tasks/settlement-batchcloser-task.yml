@@ -1,0 +1,27 @@
+---
+   - name: Stop ZoneSwitch.Settlement.BatchCloser service
+     win_service:
+      name: ZoneSwitch.Settlement.BatchCloser
+      state: absent
+
+   - name: Delete ZoneSwitch.Settlement.BatchCloser files
+     win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.settlementbatchcloser.complied
+      state: absent
+      
+   - name: Clone ZoneSwitch.Settlement.BatchCloser service from git
+     win_shell: "{{ settlementbatchcloser_remote_url }}"
+     args:
+       chdir: "{{ windows_service_dest_path }}"
+       executable: cmd
+
+   - name: Install ZoneSwitch Settlement Batchcloser as a windows service
+     win_nssm:
+      name: ZoneSwitch.Settlement.BatchCloser
+      start_mode: auto
+      application: '{{ settlementbatchcloser_app_src_path_exe }}'
+
+   - name: Start ZoneSwitch Settlement Batchcloser service
+     win_service:
+       name: ZoneSwitch.Settlement.BatchCloser
+       state: started

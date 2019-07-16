@@ -1,0 +1,24 @@
+---
+  - name: Stop ZoneSwitch.Cards service
+    win_service:
+      name: ZoneSwitch.Cards
+      state: absent
+  - name: Delete ZoneSwitch.Cards files
+    win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.transactionmanagercards.complied
+      state: absent
+  - name: Clone ZoneSwitch.Cards service from git
+    win_shell: "{{ cardTm_remote_url }}"
+    args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+  - name: Install ZoneSwitch.Cards as a windows service
+    win_nssm:
+      name: ZoneSwitch.Cards
+      start_mode: auto
+      application: '{{ cardTm_app_src_path_exe }}'
+  - name: Start ZoneSwitch.Cards service
+    win_service:
+      name: ZoneSwitch.Cards
+      state: started
+  

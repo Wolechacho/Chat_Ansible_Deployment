@@ -1,0 +1,25 @@
+---
+  - name: Stop ZoneSwitch.Reversal service
+    win_service:
+      name: ZoneSwitch.Reversal
+      state: absent
+
+  - name: Delete ZoneSwitch.Reversal files
+    win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.reversal.complied
+      state: absent
+  - name: Clone Reversal service from git
+    win_shell: "{{ reversal_remote_url }}"
+    args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+  - name: Install ZoneSwitch.Reversal as a windows service
+    win_nssm:
+      name: ZoneSwitch.Reversal
+      start_mode: auto
+      application: '{{ reversal_app_src_path_exe }}'
+  - name: Start ZoneSwitch.Reversal service
+    win_service:
+      name: ZoneSwitch.Reversal
+      state: started

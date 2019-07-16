@@ -1,0 +1,44 @@
+---
+
+  - name: Delete ZoneSwitch.Billing compiled code files
+    win_file:
+      path: '{{ git_repos_dest_path }}/zoneSwitch.billing.compiled'
+      state: absent
+
+  - name: Clone billing service from git
+    win_shell: "{{ billing_remote_url }}"
+    args:
+      chdir: "{{ git_repos_dest_path }}"
+      executable: cmd
+
+  - name: Stop ZoneSwitch.Billing service
+    win_service:
+      name: ZoneSwitch.Billing
+      state: absent
+
+  - name: Create ZoneSwitch.Billing Service
+    win_file:
+      path: "{{ windows_service_dest_path }}/ZoneSwitch.Billing"
+      state: directory
+
+  - name: Copy compiled code to Services Directory
+    win_copy:
+      src:  "{{ git_repos_dest_path }}/zoneswitch.billing.compiled/Debug/"
+      remote_src: yes
+      dest: "{{ windows_service_dest_path }}/ZoneSwitch.Billing"
+
+  - name: Remove Git Tracking folder, if present
+    win_file:
+      path: C:\ZoneSwitch\Services\ZoneSwitch.Billing\.git
+      state: absent
+
+  - name: Install billing as a windows service
+    win_nssm:
+      name: ZoneSwitch.Billing
+      start_mode: auto
+      application: '{{ billing_app_src_path_exe }}'
+
+  - name: Start ZoneSwitch.Billing service
+    win_service:
+      name: ZoneSwitch.Billing
+      state: started

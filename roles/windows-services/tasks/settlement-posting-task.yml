@@ -1,0 +1,27 @@
+---
+ - name: Stop ZoneSwitch.Settlement.Posting service
+   win_service:
+      name: ZoneSwitch.Settlement.Posting
+      state: absent
+
+ - name: Delete ZoneSwitch.Settlement.Posting files
+   win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.settlementposting.complied
+      state: absent
+      
+ - name: Clone ZoneSwitch.Settlement.Posting service from git
+   win_shell: "{{ settlementposting_remote_url }}"
+   args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+ - name: Install ZoneSwitch Settlement Posting as a windows service
+   win_nssm:
+      name: ZoneSwitch.Settlement.Posting
+      start_mode: auto
+      application: '{{ settlementposting_app_src_path_exe }}'
+      
+ - name: Start ZoneSwitch Settlment Posting service
+   win_service:
+      name: ZoneSwitch.Settlement.Posting
+      state: started

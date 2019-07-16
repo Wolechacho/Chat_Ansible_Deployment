@@ -1,0 +1,15 @@
+---
+
+chocolatey_version: '0.10.11'
+eventstore_args: '-db=./db; -log=./logs'
+evenstore_app_path_exe: 'C:\ProgramData\chocolatey\lib\eventstore-oss\tools\EventStore.ClusterNode.exe'
+eventstore_version: '4.0.3'
+dotnetcore_windows_hosting_version: '2.2.5'
+dotnetcore_runtime_version: '2.2.5'
+#windows_services_dest_path: 'C:\ZoneSwitch\Services'
+web_services_dest_path: 'C:\inetpub\wwwroot\SignalRWeb'
+git_repos_dest_path: 'C:\GitRepo.CompiledCode'
+#chat_app_url: 'git clone https://github.com/Wolechacho/Chat-App-Server.git'
+chat_app_url: 'git clone git@github.com:Wolechacho/ChatServerArtifacts.git'
+pw_script: "C:\PW"
+

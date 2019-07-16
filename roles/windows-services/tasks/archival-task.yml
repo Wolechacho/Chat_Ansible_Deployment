@@ -1,0 +1,26 @@
+---
+  - name: Stop ZoneSwitch.Archival service
+    win_service:
+      name: ZoneSwitch.Archival
+      state: absent
+
+  - name: Delete ZoneSwitch.Archival files
+    win_file:
+      path: C:\ZoneSwitch\Services\zoneSwitch.archival.complied
+      state: absent
+
+  - name: Clone Archival service from git
+    win_shell: "{{ archival_remote_url }}"
+    args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+  - name: Install Archival as a windows service
+    win_nssm:
+      name: ZoneSwitch.Archival
+      start_mode: auto
+      application: '{{ archival_app_src_path_exe }}'
+
+  - name: Start ZoneSwitch.Archival service
+    win_service:
+      name: ZoneSwitch.Archival
+      state: started

@@ -1,0 +1,9 @@
+---
+
+chocolatey_version: '0.10.11'
+pw_script: 'C:\GitRepo.CompiledCode\Chat-App-Server\PW_Script'
+#serverInstaneName: 'devAnsibleEnv\SQLEXPRESS'
+#databasename: 'ChatDB'
+dropcreate_dbscript : 'C:\GitRepo.CompiledCode\Chat-App-Server\Sql Script\Drop_CreateDB.sql'
+createtables_dbscript: 'C:\GitRepo.CompiledCode\Chat-App-Server\Sql Script\ChatDb_Tables.sql'
+createstoredprocedures_dbscript: 'C:\GitRepo.CompiledCode\Chat-App-Server\Sql Script\StoredProcedures.sql'

@@ -1,0 +1,75 @@
+---
+  - name: Ensure connectivity to the server
+    win_ping:
+  - name: Install .Net framework 2.0 & 3.5
+    win_feature:
+      name: Net-Framework-Core
+      include_sub_features: yes
+      state: present
+
+  - name: Install IIS for Web Services
+    win_feature:
+      name: Web-Server
+      include_sub_features: yes
+      include_management_tools: yes
+      state: present
+
+  - name: Debug Chocolatey Version 
+    debug:
+      msg : '{{ chocolatey_version }}'
+
+  - name: Install Chocolatey
+    win_chocolatey:
+      name: chocolatey
+      version: '{{ chocolatey_version }}'
+      state: present
+      force: yes
+
+  - name: Install Git
+    win_chocolatey:
+      name: git
+      state: present
+
+  - name: Install Google chrome
+    win_chocolatey:
+      name: googlechrome
+      state: present
+
+  - name: Install nssm
+    win_chocolatey:
+      name: nssm
+      state: present
+
+  - name: Download & Install.Net Core
+    win_chocolatey:
+      name: dotnetcore-runtime
+      state: present
+      version: '{{ dotnetcore_runtime_version }}'
+
+  - name: Download & Install Windows Hosting for ASP Core App
+    win_chocolatey:
+      name: dotnetcore-windowshosting
+      state: present
+      version: '{{ dotnetcore_windows_hosting_version }}'
+
+
+  - name: Create Directory for Git Repos
+    win_file:
+      path: "{{ git_repos_dest_path }}"
+      state: directory
+
+  - name: Create directory for Web services
+    win_file:
+      path: "{{ web_services_dest_path }}"
+      state: directory
+
+  - name: Delete Chat-App-Server Folder
+    win_file:
+      path: '{{ git_repos_dest_path }}/ChatServerArtifacts'
+      state: absent
+
+  - name: Clone Chat-App-Server git
+    win_shell: "{{ chat_app_url }}"
+    args:
+      chdir: "{{ git_repos_dest_path }}"
+      executable: cmd

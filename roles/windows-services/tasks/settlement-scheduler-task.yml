@@ -1,0 +1,27 @@
+---
+ - name: Stop ZoneSwitch.Settlement.Scheduler service
+   win_service:
+      name: ZoneSwitch.Settlement.Scheduler
+      state: absent
+
+ - name: Delete ZoneSwitch.Settlement.Scheduler files
+   win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.settlementscheduler.complied
+      state: absent
+      
+ - name: Clone ZoneSwitch.Settlement.Scheduler service from git
+   win_shell: "{{ settlementscheduler_remote_url }}"
+   args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+ - name: Install ZoneSwitch.Settlement.Scheduler as a windows service
+   win_nssm:
+     name: ZoneSwitch.Settlement.Scheduler
+     start_mode: auto
+     application: '{{ settlementscheduler_app_src_path_exe }}'
+      
+ - name: Start ZoneSwitch.Settlement.Scheduler service
+   win_service:
+     name: ZoneSwitch.Settlement.Scheduler
+     state: started

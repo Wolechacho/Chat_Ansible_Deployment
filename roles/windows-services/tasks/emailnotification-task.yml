@@ -1,0 +1,28 @@
+---
+  - name: Stop ZoneSwitch.EmailNotification service
+    win_service:
+      name: ZoneSwitch.EmailNotification
+      state: absent
+
+  - name: Delete ZoneSwitch.EmailNotification files
+    win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.emailnotification.complied
+      state: absent
+      
+  - name: Clone EmailNotification service from git
+    win_shell: "{{ emailnotification_remote_url }}"
+    args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+  - name: Install ZoneSwitch.EmailNotification as a windows service
+    win_nssm:
+      name: ZoneSwitch.EmailNotification
+      start_mode: auto
+      application: '{{ emailnotification_app_src_path_exe }}'
+  
+  - name: Start ZoneSwitch.EmailNotification service
+    win_service:
+      name: ZoneSwitch.EmailNotification
+      state: started
+  

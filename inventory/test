@@ -1,0 +1,2 @@
+[webservers]
+devAnsible ansible_host=51.145.9.114 ansible_connection=winrm ansible_port=5985 ansible_user=adewole25real ansible_password=Adewole25real ansible_winrm_transport=ntlm ansible_become_password=adewole25real

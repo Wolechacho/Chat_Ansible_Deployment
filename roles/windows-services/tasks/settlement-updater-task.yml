@@ -1,0 +1,27 @@
+---
+ - name: Stop ZoneSwitch.Settlement.Updater service
+   win_service:
+     name: ZoneSwitch.Settlement.Updater
+     state: absent
+
+ - name: Delete ZoneSwitch.Settlement.Updater files
+   win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.settlementupdater.complied
+      state: absent
+      
+ - name: Clone ZoneSwitch.Settlement.Updater service from git
+   win_shell: "{{ settlementupdater_remote_url }}"
+   args:
+     chdir: "{{ windows_service_dest_path }}"
+     executable: cmd
+
+ - name: Install ZoneSwitch Settlement Updater as a windows service
+   win_nssm:
+    name: ZoneSwitch.Settlment.Updater
+    start_mode: auto
+    application: '{{ settlementupdater_app_src_path_exe }}'
+      
+ - name: Start ZoneSwitch Settlement Updater service
+   win_service:
+    name: ZoneSwitch.Settlement.Updater
+    state: started

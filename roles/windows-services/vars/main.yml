@@ -1,0 +1,44 @@
+---
+
+windows_service_dest_path: 'C:\ZoneSwitch\Services'
+git_repos_dest_path: 'C:\Zoneswitch.CompiledCode'
+git_accesstoken: 'git clone https://x-token-auth:"IY3bqSUfFiluIDQ07SgDR7RCl8H_PbgtA1HrkyZzsSgB9TWRniC6lupUd_dDejTtRy7wmGa3VtU3bapKCE0%3D"@bitbucket.org/appzonegroup'
+
+
+billing_remote_url: '{{ git_accesstoken }}/zoneswitch.billing.compiled.git'
+billing_app_src_path_exe: '{{ windows_service_dest_path }}/zoneSwitch.billing.compiled/Debug/ZoneSwitch.Billing.exe'
+
+archival_remote_url: '{{ git_accesstoken }}/zoneswitch.archival.complied.git'
+archival_app_src_path_exe: '{{ windows_service_dest_path }}/zoneSwitch.archival.complied/Debug/ZoneSwitch.Archival.exe'
+
+
+reversal_remote_url: '{{ git_accesstoken }}/zoneswitch.reversal.complied.git'
+reversal_app_src_path_exe: '{{ windows_service_dest_path }}/zoneSwitch.reversal.complied/Debug/ZoneSwitch.Reversal.exe'
+
+
+emailnotification_remote_url: '{{ git_accesstoken }}/zoneswitch.emailnotification.complied.git'
+emailnotification_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.emailnotification.complied/Debug/ZoneSwitch.TSEmailNotification.exe'
+
+sessionmanager_remote_url: '{{ git_accesstoken }}/zoneswitch.sessionmanager.complied.git'
+sessionmanager_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.sessionmanager.complied/Debug/ZoneSwitch.SessionManager.Host.exe'
+
+cardTm_remote_url: '{{ git_accesstoken }}/zoneswitch.transactionmanagercards.complied.git'
+cardTm_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.transactionmanagercards.complied/Debug/ZoneSwitch.Cards.exe'
+
+
+settlementbatchcloser_remote_url: '{{ git_accesstoken }}/zoneswitch.settlementbatchcloser.complied.git'
+settlementbatchcloser_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.settlementbatchcloser.complied/Debug/ZoneSwitch.Settlement.BatchCloser.exe'
+
+settlementposting_remote_url: '{{ git_accesstoken }}/zoneswitch.settlementposting.complied.git'
+settlementposting_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.settlementposting.complied/Debug/ZoneSwitch.Settlement.Posting.exe'
+
+settlementscheduler_remote_url: '{{ git_accesstoken }}/zoneswitch.settlementscheduler.complied.git'
+settlementscheduler_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.settlementscheduler.complied/Debug/ZoneSwitch.Settlement.Scheduler.exe'
+
+settlementreportgenerator_remote_url: '{{ git_accesstoken }}/zoneswitch.settlementreportgenerator.complied.git'
+settlementreportgenerator_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.settlementreportgenerator.complied/Debug/ZoneSwitch.Settlement.Report.exe'
+
+settlementupdater_remote_url: '{{ git_accesstoken }}/zoneswitch.settlementupdater.complied.git'
+settlementupdater_app_src_path_exe: '{{ windows_service_dest_path }}/zoneswitch.settlementupdater.complied/Debug/ZoneSwitch.Settlement.Updater.exe'
+
+

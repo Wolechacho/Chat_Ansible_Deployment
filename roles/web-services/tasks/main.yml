@@ -1,0 +1,38 @@
+---
+
+  - name: Create MeetFriendsChatServer Folder
+    win_file:
+      path: '{{ web_services_dest_path }}/MeetFriendsChatServer'
+      state: directory
+  
+  - name: Copy folder contents recursively
+    win_copy:
+      src:  "{{ git_repos_dest_path }}/"
+      remote_src: yes
+      dest: '{{ web_services_dest_path }}/MeetFriendsChatServer'
+
+
+  - name: Create MeetFriendsChatServer Website
+    win_iis_website:
+      name: MeetFriendsCom
+      state: restarted
+      physical_path: '{{ web_services_dest_path }}'
+    register: website
+
+  - name: Add http binding to MeetFriendsChatServer Website
+    win_iis_webbinding:
+      name: MeetFriendsCom
+      port: 443
+      protocol: https
+      certificate_hash: 75e09204c6d8c9892ab1ec3bb896c458601508fa
+      ip: '*'
+      state: present
+
+  - name: Add MeetFriendsChatServer application to Website
+    win_iis_webapplication:
+      name: ChatServer
+      state: present
+      site: MeetFriendsCom
+      physical_path: '{{ web_services_dest_path }}\MeetFriendsChatServer'
+    notify:
+      - Restart Windows Server

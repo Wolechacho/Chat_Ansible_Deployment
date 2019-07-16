@@ -1,0 +1,27 @@
+---
+ - name: Stop ZoneSwitch.Settlement.ReportGenerator service
+   win_service:
+      name: ZoneSwitch.Settlement.ReportGenerator
+      state: absent
+
+ - name: Delete ZoneSwitch.Settlement.ReportGenerator files
+   win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.settlementreportgenerator.complied
+      state: absent
+      
+ - name: Clone ZoneSwitch.Settlement.ReportGenerator service from git
+   win_shell: "{{ settlementreportgenerator_remote_url }}"
+   args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+ - name: Install ZoneSwitch.Settlement.ReportGenerator as a windows service
+   win_nssm:
+      name: ZoneSwitch.Settlement.ReportGenerator
+      start_mode: auto
+      application: '{{ settlementreportgenerator_app_src_path_exe }}'
+      
+ - name: Start ZoneSwitch.Settlement.ReportGenerator service
+   win_service:
+      name: ZoneSwitch.Settlement.ReportGenerator
+      state: started

@@ -1,0 +1,26 @@
+---
+  - name: Stop ZoneSwitch.SessionManager service
+    win_service:
+      name: ZoneSwitch.SessionManager
+      state: absent
+
+  - name: Delete ZoneSwitch.SessionManager files
+    win_file:
+      path: C:\ZoneSwitch\Services\zoneswitch.sessionmanager.complied
+      state: absent
+
+  - name: Clone SessionManager service from git
+    win_shell: "{{ sessionmanager_remote_url }}"
+    args:
+      chdir: "{{ windows_service_dest_path }}"
+      executable: cmd
+
+  - name: Install ZoneSwitch SessionManager Host as a windows service
+    win_nssm:
+      name: ZoneSwitch.SessionManager
+      start_mode: auto
+      application: '{{ sessionmanager_app_src_path_exe }}'
+  # - name: Start ZoneSwitch ZoneSwitch SessionManager Host
+  #   win_service:
+  #     name: ZoneSwitch.SessionManager
+  #     state: started
